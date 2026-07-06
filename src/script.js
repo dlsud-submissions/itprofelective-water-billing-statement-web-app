@@ -7,12 +7,24 @@ const submitBtn = document.getElementById('submit-btn');
 const resetBtn = document.getElementById('reset-btn');
 const outputBox = document.getElementsByClassName('output-box');
 
-let validateCustomerName = (e) => {
-
+let validateFormField = (e) => {
     // Check for content
-    const inputValue = customerNameInput.value;
+    const inputValue = e.target.value;
 
-    // Validate input  value
+    // Determine input field
+    const inputFieldName = e.target.name;
+
+    switch(inputFieldName) {
+        case 'customer-name-input':
+            validateCustomerName(inputValue);
+            break;
+        default:
+            console.log('default');
+    }
+}
+
+const validateCustomerName = (inputValue) => {
+    // Validate input value
     let inputIsValid = inputValue !== '';
 
     const spanError = document.getElementById('customer-name-error')
@@ -30,6 +42,6 @@ let validateCustomerName = (e) => {
 }
 
 // Attach event listeners to input elements
-submitBtn.addEventListener('click', validateCustomerName);
+customerNameInput.addEventListener('blur', validateFormField);
 
 // Attach event listener to submit button
