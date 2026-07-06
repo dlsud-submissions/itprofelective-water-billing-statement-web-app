@@ -30,15 +30,11 @@ let validateFormField = (e) => {
 let triggerSpanError = (command = 'removeError', spanError) => {
     if (command === 'setError') {
         spanError.classList.add('error-span');
-
-        submitBtn.setAttribute('disabled', 'true');
     } 
     
     if (command === 'removeError') {
         spanError.innerText = '';
         spanError.classList.remove('error-span');
-
-        submitBtn.setAttribute('disabled', 'false');
     }
 }
 
@@ -152,8 +148,6 @@ const calculateValues = () => {
 
     // Show on output box
     displayoutputText(customerName, customerType, waterUsage, rate, amount, discount, total);
-
-    submitBtn.setAttribute('disabled', 'false');
 }
 
 // Attach event listeners to input elements
