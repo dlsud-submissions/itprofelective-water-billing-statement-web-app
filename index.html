@@ -13,7 +13,39 @@
 
     <main>
         <form action="YOUR_WEB_APP_URL" method="post" class="statement-form">
-            
+            <div class="form-row">
+                <label for="customer-name">Customer Name:</label>
+                <input type="text" name="customer-name-input" placeholder="Harvey Rullan">
+                <span class="error-span" id="customer-name-error"></span>
+            </div>
+
+            <div class="form-row">
+                <label for="water-consumption">Water Consumption (Cubic Meter):</label>
+                <input type="number" name="water-consumption-input" placeholder="100">
+                <span class="error-span" id="water-consumption-error"></span>
+            </div>
+
+            <div class="form-row">
+                <label for="customer-type">Customer Type:</label>
+                <select name="customer-type" id="customer-type-select">
+                    <option value="regular">Regular</option>
+                    <option value="senior-citizen">Senior Citizen</option>
+                    <option value="solo-parent">Solo Parent</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <button type="submit">Generate Bill</button>
+                <button type="reset">Clear Input</button>
+            </div>
+
+            <div class="form-row">
+                <p class="body-text">Transactions Processed: 
+                    <span id="transaction-count">0</span>
+                </p>
+                
+                <div class="output-box"></div>
+            </div>
         </form>
     </main>
 
