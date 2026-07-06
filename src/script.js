@@ -1,158 +1,121 @@
-// Get DOM elements
-const statementForm = document.getElementsByClassName('statement-form');
-const customerNameInput = document.querySelector('#customer-name-input');
-const waterConsumptionInput = document.querySelector('#water-consumption-input');
-const customerTypeSelect = document.querySelector('#customer-type-select');
-const calculateBtn = document.getElementById('calculate-btn');
-const submitBtn = document.getElementById('submit-btn');
-const resetBtn = document.getElementById('reset-btn');
-const outputText = document.getElementById('output-text');
+const form=document.querySelector(".statement-form");
 
-let validateFormField = (e) => {
-    // Check for content
-    const inputValue = e.target.value;
+const customerName=document.getElementById("customer-name-input");
+const waterConsumption=document.getElementById("water-consumption-input");
+const customerType=document.getElementById("customer-type-select");
 
-    // Determine input field
-    const inputFieldName = e.target.name;
+const calculateBtn=document.getElementById("calculate-btn");
 
-    switch(inputFieldName) {
-        case 'customer-name-input':
-            validateCustomerName(inputValue);
-            break;
-        case 'water-consumption-input':
-            validateWaterConsumption(inputValue);
-            break;
+const output=document.getElementById("output-text");
+
+const customerError=document.getElementById("customer-name-error");
+const waterError=document.getElementById("water-consumption-error");
+
+function validateName(){
+
+    if(customerName.value.trim()==""){
+
+        customerError.textContent="Customer name is required.";
+
+        return false;
+    }
+
+    customerError.textContent="";
+    return true;
+}
+
+function validateWater(){
+
+    let value=Number(waterConsumption.value);
+
+    if(value<=0 || isNaN(value)){
+
+        waterError.textContent="Must be greater than zero.";
+
+        return false;
+    }
+
+    waterError.textContent="";
+    return true;
+}
+
+function calculateRate(usage){
+
+    if(usage<=20) return 25;
+
+    if(usage<=40) return 35;
+
+    if(usage<=60) return 45;
+
+    return 60;
+}
+
+function discountRate(){
+
+    switch(customerType.value){
+
+        case "senior-citizen":
+            return .25;
+
+        case "solo-parent":
+            return .15;
+
         default:
-            console.log('default');
+            return 0;
     }
 }
 
-let triggerSpanError = (command = 'removeError', spanError) => {
-    if (command === 'setError') {
-        spanError.classList.add('error-span');
-    } 
-    
-    if (command === 'removeError') {
-        spanError.innerText = '';
-        spanError.classList.remove('error-span');
-    }
+function calculateBill(){
+
+    if(!validateName()) return;
+
+    if(!validateWater()) return;
+
+    let usage=Number(waterConsumption.value);
+
+    let rate=calculateRate(usage);
+
+    let amount=usage*rate;
+
+    let discount=amount*discountRate();
+
+    let total=amount-discount;
+
+    output.innerHTML=`
+<b>WATER BILL</b><br><br>
+
+Customer Name: ${customerName.value}<br>
+
+Customer Type: ${customerType.options[customerType.selectedIndex].text}<br>
+
+Water Usage: ${usage} m³<br>
+
+Rate: ₱${rate.toFixed(2)}<br>
+
+Amount: ₱${amount.toFixed(2)}<br>
+
+Discount: ₱${discount.toFixed(2)}<br>
+
+<hr>
+
+<b>Total Bill: ₱${total.toFixed(2)}</b>
+`;
 }
 
-const validateCustomerName = (inputValue) => {
-    // Validate input value
-    const customerSpanError = document.getElementById('customer-name-error')
-    
-    let inputIsEmpty = inputValue === '';
-    if (inputIsEmpty) {
-        customerSpanError.innerText = 'Customer Input is a required field';
-        triggerSpanError('setError', customerSpanError);
-    } else {
-        triggerSpanError('removeError', customerSpanError);
-    }
-}
+calculateBtn.addEventListener("click",calculateBill);
 
-const validateWaterConsumption = (inputValue) => {
-    const waterSpanError = document.getElementById('water-consumption-error');
-    
-    let negativeInput = inputValue < 1;
-    if (negativeInput) {
-        waterSpanError.innerText = 'Must be a value greater than 0';
-        triggerSpanError('setError', waterSpanError);
-    } else {
-        triggerSpanError('removeError', waterSpanError)
-    }
+customerName.addEventListener("blur",validateName);
 
-    const rate = calculateRate(inputValue);
-}
+waterConsumption.addEventListener("blur",validateWater);
 
-const calculateRate = (cubicMeter) => {
-    if (cubicMeter >= 1 && cubicMeter <= 20) {
-        return 25.00;
-    } else if (cubicMeter >= 21 && cubicMeter <= 40) {
-        return 35.00;
-    } else if (cubicMeter >= 41 && cubicMeter <= 60) {
-        return 45;
-    } else {
-        return 60.00;
-    }
-}
+form.addEventListener("submit",function(e){
 
-const calculateAmount = (waterUsage, rate) => {
-    return waterUsage * rate;
-}
+    if(!validateName() || !validateWater()){
 
-const getDiscountRate = () => {
-    const customerTypeValue = customerTypeSelect.value;
-    let discountRate;
+        e.preventDefault();
 
-    switch (customerTypeValue) {
-        case 'regular':
-            discountRate = 0;
-            break;
-        case 'senior-citizen':
-            discountRate = 0.25;
-            break;
-        case 'solo-parent':
-            discountRate = 0.15;
-            break;
+        return;
     }
 
-    return discountRate;
-}
-
-const calculateDiscount = (amount) => {
-    const discountRate = getDiscountRate();
-
-    // Assume has discount
-    if (discountRate > 0) {
-        return amount * discountRate;
-    }
-
-    // No discount case (value of 0)
-    return 0;
-}
-
-const calculateTotal = (amount, discount) => {  
-    return amount - discount;
-}
-
-const displayoutputText = (customerName, customerType, waterUsage, rate, amount, discount, total) => {
-    outputText.innerHTML = `
-    ================================================== <br>
-    WATER BILLING <br>
-    ================================================== <br>
-
-    Customer Name: ${customerName} <br>
-    Customer Type: ${customerType} <br>
-    Water Usage: ${waterUsage} <br>
-    Rate: ${rate} <br>
-    ______________________________ <br>
-    Amount: ${amount} <br>
-    Discount: ${discount} <br>
-    ______________________________ <br>
-    TOTAL BILL: ${total} <br>
-    `;
-
-
-}
-
-const calculateValues = () => {
-    // Get values
-    const customerName = customerNameInput.value;
-    const customerType = customerTypeSelect.value;
-    const waterUsage = waterConsumptionInput.value;
-    const rate = calculateRate(waterUsage);
-    const amount = calculateAmount(waterUsage, rate);
-    const discount = calculateDiscount(amount);
-    const total = calculateTotal(amount, discount);
-
-    // Show on output box
-    displayoutputText(customerName, customerType, waterUsage, rate, amount, discount, total);
-}
-
-// Attach event listeners to input elements
-customerNameInput.addEventListener('blur', validateFormField);
-waterConsumptionInput.addEventListener('blur', validateFormField)
-
-// Attach event listener to calculate button
-calculateBtn.addEventListener('click', calculateValues);
+    calculateBill();
+});
