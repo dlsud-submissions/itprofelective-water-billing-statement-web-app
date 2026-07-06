@@ -114,6 +114,10 @@ const calculateDiscount = (amount) => {
     return amount;
 }
 
+const calculateTotal = (amount, discount) => {  
+    return amount - discount;
+}
+
 // Attach event listeners to input elements
 customerNameInput.addEventListener('blur', validateFormField);
 waterConsumptionInput.addEventListener('blur', validateFormField)
