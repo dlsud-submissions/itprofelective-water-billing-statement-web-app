@@ -27,7 +27,7 @@ let validateFormField = (e) => {
     }
 }
 
-let triggerSpanError = (command='removeError', spanError) => {
+let triggerSpanError = (command = 'removeError', spanError) => {
     if (command === 'setError') {
         spanError.classList.add('error-span');
 
@@ -48,7 +48,7 @@ const validateCustomerName = (inputValue) => {
     
     let inputIsEmpty = inputValue === '';
     if (inputIsEmpty) {
-        spanError.innerText = 'Customer Input is a required field';
+        customerSpanError.innerText = 'Customer Input is a required field';
         triggerSpanError('setError', customerSpanError);
     } else {
         triggerSpanError('removeError', customerSpanError);
@@ -60,8 +60,10 @@ const validateWaterConsumption = (inputValue) => {
     
     let negativeInput = inputValue < 1;
     if (negativeInput) {
-        spanError.innerText = 'Must be a value greater than 0';
+        waterSpanError.innerText = 'Must be a value greater than 0';
         triggerSpanError('setError', waterSpanError);
+    } else {
+        triggerSpanError('removeError', waterSpanError)
     }
 
     const rate = calculateRate(inputValue);
@@ -134,6 +136,8 @@ const displayoutputText = (customerName, customerType, waterUsage, rate, amount,
     ______________________________ <br>
     TOTAL BILL: ${total} <br>
     `;
+
+
 }
 
 const calculateValues = () => {
@@ -148,6 +152,8 @@ const calculateValues = () => {
 
     // Show on output box
     displayoutputText(customerName, customerType, waterUsage, rate, amount, discount, total);
+
+    submitBtn.setAttribute('disabled', 'false');
 }
 
 // Attach event listeners to input elements
