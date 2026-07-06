@@ -2,61 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Billing Statement</title>
+
     <link rel="stylesheet" href="./src/styles.css">
 </head>
+
 <body>
-    <head>
-        <h1 class="header-text">Water Billing Statement</h1>
-    </head>
 
-    <main>
-        <form action="YOUR_WEB_APP_URL" method="post" class="statement-form">
-            <div class="form-row">
-                <label for="customer-name">Customer Name:</label>
-                <input type="text" name="customer-name-input" placeholder="Harvey Rullan" id="customer-name-input">
-                <span class="error-span" id="customer-name-error"></span>
-            </div>
+<header>
+    <h1 class="header-text">Water Billing Statement</h1>
+</header>
 
-            <div class="form-row">
-                <label for="water-consumption">Water Consumption (Cubic Meter):</label>
-                <input type="number" name="water-consumption-input" id="water-consumption-input" placeholder="100">
-                <span class="error-span" id="water-consumption-error"></span>
-            </div>
+<main>
 
-            <div class="form-row">
-                <label for="customer-type">Customer Type:</label>
-                <select name="customer-type" id="customer-type-select">
-                    <option value="regular">Regular</option>
-                    <option value="senior-citizen">Senior Citizen</option>
-                    <option value="solo-parent">Solo Parent</option>
-                </select>
-            </div>
+<form
+    class="statement-form"
+    action="https://script.google.com/macros/s/AKfycbyRq_OGFOCt5_X_czjLPYF4NZzZah8aFhDsD4zbU8-AMoPUeATJsX4xWhKbEyGTRu73/exec"
+    method="POST">
 
-            <div class="form-row">
-                <button type="button" id="calculate-btn">Calculate Bill</button>
-                <button type="submit" id="submit-btn">Submit Bill</button>
-                <button type="reset" id="reset-btn">Clear Input</button>
-            </div>
+    <div class="form-row">
+        <label for="customer-name-input">Customer Name</label>
 
-            <div class="form-row">
-                <p class="body-text">Transactions Processed: 
-                    <span id="transaction-count">0</span>
-                </p>
-                
-                <div class="output-box">
-                    <p id="output-text"></p>
-                </div>
-            </div>
-        </form>
-    </main>
+        <input
+            type="text"
+            id="customer-name-input"
+            name="customer-name-input"
+            placeholder="Harvey Rullan">
 
-    <footer>
-        <p class="body-text">All Rights Reserved - DLSU-D Submissions - 2026</p>
-    </footer>
+        <span
+            id="customer-name-error"
+            class="error-text">
+        </span>
+    </div>
 
-    <script src="./src/script.js"></script>
+    <div class="form-row">
+        <label for="water-consumption-input">
+            Water Consumption (m³)
+        </label>
+
+        <input
+            type="number"
+            id="water-consumption-input"
+            name="water-consumption-input"
+            placeholder="100">
+
+        <span
+            id="water-consumption-error"
+            class="error-text">
+        </span>
+    </div>
+
+    <div class="form-row">
+        <label for="customer-type-select">
+            Customer Type
+        </label>
+
+        <select
+            id="customer-type-select"
+            name="customer-type">
+
+            <option value="regular">
+                Regular
+            </option>
+
+            <option value="senior-citizen">
+                Senior Citizen
+            </option>
+
+            <option value="solo-parent">
+                Solo Parent
+            </option>
+
+        </select>
+    </div>
+
+    <div class="button-group">
+        <button type="button" id="calculate-btn">
+            Calculate Bill
+        </button>
+
+        <button type="submit">
+            Submit Bill
+        </button>
+
+        <button type="reset">
+            Clear
+        </button>
+    </div>
+
+    <div class="form-row">
+
+        <div class="output-box">
+            <p id="output-text"></p>
+        </div>
+
+    </div>
+
+</form>
+
+</main>
+
+<footer>
+    <p>All Rights Reserved - DLSU-D Submissions - 2026</p>
+</footer>
+
+<script src="./src/script.js"></script>
+
 </body>
 </html>
