@@ -67,6 +67,18 @@ const validateWaterConsumption = (inputValue) => {
     const rate = calculateRate(inputValue);
 }
 
+const calculateRate = (cubicMeter) => {
+    if (cubicMeter >= 1 && cubicMeter <= 20) {
+        return 25.00;
+    } else if (cubicMeter >= 21 && cubicMeter <= 40) {
+        return 35.00;
+    } else if (cubicMeter >= 41 && cubicMeter <= 60) {
+        return 45;
+    } else {
+        return 60.00;
+    }
+}
+
 // Attach event listeners to input elements
 customerNameInput.addEventListener('blur', validateFormField);
 waterConsumptionInput.addEventListener('blur', validateFormField)
