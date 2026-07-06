@@ -2,7 +2,7 @@
 const statementForm = document.getElementsByClassName('statement-form');
 const customerNameInput = document.querySelector('#customer-name-input');
 const waterConsumptionInput = document.querySelector('#water-consumption-input');
-const customerTypeSelect = document.getElementsByName('customer-type-select');
+const customerTypeSelect = document.querySelector('#customer-type-select');
 const submitBtn = document.getElementById('submit-btn');
 const resetBtn = document.getElementById('reset-btn');
 const outputBox = document.getElementsByClassName('output-box');
@@ -77,6 +77,41 @@ const calculateRate = (cubicMeter) => {
     } else {
         return 60.00;
     }
+}
+
+const calculateAmount = (waterUsage, rate) => {
+    return waterUsage * rate;
+}
+
+const getDiscountRate = () => {
+    const customerTypeValue = customerTypeSelect.value;
+    let discountRate;
+
+    switch (customerTypeValue) {
+        case 'regular':
+            discountRate = 0;
+            break;
+        case 'senior-citizen':
+            discountRate = 0.25;
+            break;
+        case 'solo-parent':
+            discountRate = 0.15;
+            break;
+    }
+
+    return discountRate;
+}
+
+const calculateDiscount = (amount) => {
+    const discountRate = getDiscountRate();
+
+    // Assume has discount
+    if (discountRate > 0) {
+        return amount * discountRate;
+    }
+
+    // No discount case (value of 0)
+    return amount;
 }
 
 // Attach event listeners to input elements
